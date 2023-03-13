@@ -7,6 +7,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+//app.use(express.static('dist'))
 
 morgan.token('body', req => {
     return JSON.stringify(req.body)
@@ -41,6 +42,7 @@ const generateId = () => {
   }
 
 app.get('/api/persons', (req, res) => {
+    console.log('retrieving all')
     res.json(data)
 })
 
@@ -57,9 +59,10 @@ app.get('/api/persons/:id', (req, res) => {
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = Number(req.params.id)
+    console.log('delete id is', id)
     data = data.filter(person => person.id !== id)
-
-    response.status(204).end()
+    console.log(data)
+    res.status(204).end()
 })
 
 app.post('/api/persons', (req, res) => {
